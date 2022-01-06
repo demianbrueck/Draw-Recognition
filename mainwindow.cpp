@@ -58,16 +58,7 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event){
     m_Line.append(p);
     update();
 
-#ifdef DEMIAN_SCODE
-    mouseInput.pos_x = event->x();
-    mouseInput.pos_y = event->y();
-    drawnLine.posX[numberPoints] = event->x();
-    drawnLine.posY[numberPoints] = event->y();
-    numberPoints++;
-    drawnLine.posX.push_back(1);
-    drawnLine.posY.push_back(1);
-    qDebug("mouseMove");
-#endif
+
 
     //qDebug() << "Mouse move event..";
     update();
@@ -80,16 +71,7 @@ void MainWindow::mousePressEvent(QMouseEvent *event){
     m_Line.append(p);
     update();
 
-#ifdef DEMIAN_SCODE
-    mouseInput.pos_x = event->x();
-    mouseInput.pos_y = event->y();
-    drawnLine.posX[numberPoints] = event->x();
-    drawnLine.posY[numberPoints] = event->y();
-    numberPoints++;
-    drawnLine.posX.push_back(1);
-    drawnLine.posY.push_back(1);
-    qDebug("mousePress");
-#endif
+
 
 }
 void MainWindow::mouseReleaseEvent(QMouseEvent *event){
@@ -108,16 +90,7 @@ void MainWindow::mouseReleaseEvent(QMouseEvent *event){
     MaxPos.bottomRight.setY(-1);
 
     update();
-#ifdef DEMIAN_SCODE
-    numberPoints = -1;
-    m_Line.clear();
 
-    MaxPos.posXLeftTop = 999999;
-    MaxPos.posYLeftTop= 999999;
-    MaxPos.posXRightBottom= -1000;
-    MaxPos.posYRightBottom= -1000;
-    qDebug("release");
-#endif
 }
 void MainWindow::paintEvent(QPaintEvent *event)
 {
@@ -169,30 +142,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
     painter.end();
 
 
-#ifdef DEMIAN_SCODE
-    painter.drawPoint(mouseInput.pos_x,mouseInput.pos_y);
 
-    /* */
-    for(int i = 0;i<numberPoints;i++){
-        /*if(color == 'R')painter.setBrush(Qt::red);
-        if(color == 'Y')painter.setBrush(Qt::yellow);
-        if(color == 'G')painter.setBrush(Qt::green);
-        if(color == 'B')painter.setBrush(Qt::blue);
-        if(color == 'D')painter.setBrush(Qt::black);*/
-        painter.setBrush(Qt::black);
-        painter.drawEllipse(drawnLine.posX[i],drawnLine.posY[i],sizeBrush,sizeBrush);
-    }
-
-    painter.drawEllipse(mouseInput.pos_x,mouseInput.pos_y,sizeBrush,sizeBrush);
-
-    painter.end();
-    QPainter secondPainter;
-    secondPainter.begin(this);
-    secondPainter.drawRect(MaxPos.posXLeftTop,MaxPos.posYLeftTop,MaxPos.posXRightBottom-MaxPos.posXLeftTop,MaxPos.posYRightBottom-MaxPos.posYLeftTop);
-
-    secondPainter.end();
-
-#endif
 }
 void MainWindow::wheelEvent(QWheelEvent *event)
 {
@@ -212,24 +162,7 @@ void MainWindow::wheelEvent(QWheelEvent *event)
 
 
 void MainWindow::onTimer(){
-#ifdef DEMIAN_SCODE
-    //qDebug("Timer...");
 
-    for(int i = 0;i<numberPoints;i++){
-        if(drawnLine.posX[i]>MaxPos.posXRightBottom)MaxPos.posXRightBottom = drawnLine.posX[i] ;
-
-        if(drawnLine.posY[i]>MaxPos.posYRightBottom)MaxPos.posYRightBottom = drawnLine.posY[i] ;
-
-        if(drawnLine.posX[i]<MaxPos.posXLeftTop)MaxPos.posXLeftTop = drawnLine.posX[i];
-
-        if(drawnLine.posY[i]<MaxPos.posYLeftTop)MaxPos.posYLeftTop = drawnLine.posY[i];
-    }
-
-    qDebug() << drawnLine.posX.size();
-    update();
-    return;
-
-#endif
 }
 
 void MainWindow::getRecognitionNumbers()
